@@ -1,6 +1,7 @@
 import React from "react";
 import RandomRecipes from "../random-recipes";
 import Navbar from "../navbar";
+import RandomCocktails from "../random-cocktails";
 
 const Home = () => {
     return(
@@ -14,9 +15,10 @@ const Home = () => {
             </div>
 
             <div className={'container'}>
-                <h3>Recommended Recipe</h3>
+                <h3>Recommended Recipes</h3>
                 <RandomRecipes/>
-
+                <h3>Recommended Cocktails</h3>
+                <RandomCocktails/>
             </div>
 
         </div>
