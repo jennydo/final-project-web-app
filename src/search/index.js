@@ -31,8 +31,9 @@ import {findFoodBySearchTerm} from "./search-service";
 import {configureStore} from "@reduxjs/toolkit";
 // import {userLikesMovieThunk} from "../likes/likes-thunks";
 
-function Search () {
-    const [searchTerm, setSearchTerm] = useState('Indian')
+
+const Search = () => {
+    const [searchTerm, setSearchTerm] = useState('')
     const {recipes, loading} = useSelector((state) => state.search)
     const dispatch = useDispatch()
     useEffect(() => {
