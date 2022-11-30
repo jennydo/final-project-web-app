@@ -31,7 +31,7 @@ import {findFoodBySearchTerm} from "./search-service";
 // import {userLikesMovieThunk} from "../likes/likes-thunks";
 
 const Search = () => {
-    const [searchTerm, setSearchTerm] = useState('Indian')
+    const [searchTerm, setSearchTerm] = useState('')
     const {recipes, loading} = useSelector((state) => state.search)
     const dispatch = useDispatch()
     useEffect(() => {
