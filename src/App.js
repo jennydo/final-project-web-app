@@ -15,7 +15,7 @@ import CurrentUser from "./users/current-user";
 function App() {
     return (
         <BrowserRouter>
-            <CurrentUser>
+            {/*<CurrentUser>*/}
                 <Navbar/>
                 <Container>
                     <Routes>
@@ -36,7 +36,7 @@ function App() {
 
                     </Routes>
                 </Container>
-            </CurrentUser>
+            {/*</CurrentUser>*/}
         </BrowserRouter>
     );
 }

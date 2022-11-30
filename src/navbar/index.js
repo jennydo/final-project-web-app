@@ -52,8 +52,8 @@ const NavbarComponent = () => {
                         <Nav.Link href={'/search'}>Cocktails</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#deets">Login</Nav.Link>
-                        <Nav.Link href="#deets">Register</Nav.Link>
+                        <Nav.Link href={'/login'}>Login</Nav.Link>
+                        <Nav.Link href={'/register'}>Register</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
