@@ -38,7 +38,7 @@ const Register = () => {
             </button>
             {
                 currentUser &&
-                <h1>Welcom new user: {currentUser.username}</h1>
+                <h1>Welcome new user: {currentUser.username}</h1>
             }
         </>
     )
