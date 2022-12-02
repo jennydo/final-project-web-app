@@ -124,7 +124,7 @@ const MealDetails = () => {
                             <img className={'w-100 mb-3'} alt={'Picture of ' + meal.strMeal} src={meal.strMealThumb}/>
                             <h3>Ingredients:</h3>
                             <ul>
-                                {ingredientList.map(u => u.length > 5 && <li>
+                                {ingredientList.map(u => !u.includes('null') && u.length > 2 && <li>
                                     {u}
                                 </li>)}
                             </ul>
@@ -134,8 +134,9 @@ const MealDetails = () => {
                             <h3>Instructions:</h3>
                             <ol>
                                 {
-                                    typeof meal.strInstructions !== "undefined" && meal.strInstructions.split("\r\n").map(u =>
-                                            u.length > 8 && <li>
+                                    typeof meal.strInstructions !== "undefined" &&
+                                    meal.strInstructions.split("\r\n").map(u =>
+                                            u.length > 4 && !u.toLowerCase().includes("step") && <li>
                                                 {u}
                                             </li>
                                     )
