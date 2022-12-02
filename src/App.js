@@ -14,9 +14,11 @@ import CurrentUser from "./users/current-user";
 import {configureStore} from "@reduxjs/toolkit";
 import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
+import randomMealReducer from "./random-recipes/random-meal-reducer";
+import mealDetailsReducer from "./meal-details/meal-details-reducer";
 
 const store = configureStore(
-    {reducer: {search: searchReducer}})
+    {reducer: {search: searchReducer, randomMeals: randomMealReducer, mealDetails: mealDetailsReducer}})
 
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
                                element={<Home/>}/>
                         <Route path="/search"
                                element={<Search/>}/>
-                        <Route path="/meal/details/:fid"
+                        <Route path="/meal/details/:mid"
                                element={<MealDetails/>}/>
                         <Route path="/users" element={<Users/>}/>
                         <Route path="/login" element={<Login/>}/>

@@ -1,35 +1,6 @@
-// import React from "react";
-// import Dropdown from 'react-bootstrap/Dropdown';
-// import DropdownButton from 'react-bootstrap/DropdownButton';
-//
-// const Search = () => {
-//
-//     return(
-//         <div>
-//             <h1>Search </h1>
-//
-//             <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-//                 <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-//                 <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-//                 <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-//             </DropdownButton>
-//
-//         </div>
-//
-//
-//
-//     )
-// }
-//
-// export default Search;
-
-
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {findFoodBySearchTermThunk} from "./search-thunks";
-import {findFoodBySearchTerm} from "./search-service";
-import {configureStore} from "@reduxjs/toolkit";
-// import {userLikesMovieThunk} from "../likes/likes-thunks";
 
 
 const Search = () => {
