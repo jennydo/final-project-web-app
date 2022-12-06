@@ -16,11 +16,12 @@ import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
 import PublicProfile from "./users/public-profile";
 import usersReducer from "./users/users-reducer";
+import randomMealReducer from "./random-recipes/random-meal-reducer";
+import mealDetailsReducer from "./meal-details/meal-details-reducer";
 
 const store = configureStore(
-    {reducer:
-            {search: searchReducer,
-                users: usersReducer}})
+    {reducer: {search: searchReducer, randomMeals: randomMealReducer, mealDetails: mealDetailsReducer,users: usersReducer}})
+
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
                                element={<Home/>}/>
                         <Route path="/search"
                                element={<Search/>}/>
-                        <Route path="/meal/details/:fid"
+                        <Route path="/meal/details/:mid"
                                element={<MealDetails/>}/>
                         <Route path="/users" element={<Users/>}/>
                         <Route path="/login" element={<Login/>}/>
