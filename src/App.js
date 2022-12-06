@@ -14,9 +14,13 @@ import CurrentUser from "./users/current-user";
 import {configureStore} from "@reduxjs/toolkit";
 import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
+import PublicProfile from "./users/public-profile";
+import usersReducer from "./users/users-reducer";
 
 const store = configureStore(
-    {reducer: {search: searchReducer}})
+    {reducer:
+            {search: searchReducer,
+                users: usersReducer}})
 
 
 function App() {
@@ -24,7 +28,7 @@ function App() {
         <Provider store={store}>
 
         <BrowserRouter>
-            {/*<CurrentUser>*/}
+            <CurrentUser>
                 <Navbar/>
                 <Container>
                     <Routes>
@@ -42,10 +46,11 @@ function App() {
                                 <Profile/>
                             </ProtectedRoute>
                         }/>
+                        {/*<Route path="/profile/:uid" element={<PublicProfile/>}/>*/}
 
                     </Routes>
                 </Container>
-            {/*</CurrentUser>*/}
+            </CurrentUser>
         </BrowserRouter>
         </Provider>
     );

@@ -1,14 +1,25 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {findAllUsersThunk, loginThunk, logoutThunk, profileThunk, registerThunk} from "./users-thunk";
+import {
+    findAllUsersThunk,
+    findUserByIdThunk,
+    loginThunk,
+    logoutThunk,
+    profileThunk,
+    registerThunk
+} from "./users-thunk";
 
 const usersReducer = createSlice({
                                      name: 'users',
                                      initialState: {
                                          users: [],
                                          loading: false,
-                                         currentUser: null
+                                         currentUser: null,
+                                         publicProfile: null
                                      },
                                      extraReducers: {
+                                         [findUserByIdThunk.fulfilled]: (state, action) => {
+                                             state.publicProfile = action.payload
+                                         },
                                          [logoutThunk.fulfilled]: (state, action) => {
                                              state.currentUser = null
                                          },
