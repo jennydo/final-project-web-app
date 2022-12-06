@@ -6,6 +6,7 @@ import CommentComponent from "./comment-component";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {mealDetailsThunks} from "./meal-details-thunks";
+import YoutubeEmbed from "./youtube-embed";
 
 const meal =
 {
@@ -122,15 +123,19 @@ const MealDetails = () => {
                     <Row>
                         <Col sm={'12'} md={'6'}>
                             <img className={'w-100 mb-3'} alt={'Picture of ' + meal.strMeal} src={meal.strMealThumb}/>
+
+                            <h3>Youtube Video:</h3>
+                            {
+                                meal.strYoutube &&  <YoutubeEmbed embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)} />
+                            }
+                        </Col>
+                        <Col>
                             <h3>Ingredients:</h3>
                             <ul>
                                 {ingredientList.map(u => !u.includes('null') && u.length > 2 && <li>
                                     {u}
                                 </li>)}
                             </ul>
-
-                        </Col>
-                        <Col>
                             <h3>Instructions:</h3>
                             <ol>
                                 {
