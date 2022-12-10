@@ -41,4 +41,10 @@ export const createUser = () => {
 }
 
 const deleteUser = () => {}
-const updateUser = () => {}
+
+
+export const updateUser = async (user) => {
+    const response = await axios
+        .put(`${USER_API_URL}/${user.uid}`, user);
+    return user;
+}

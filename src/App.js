@@ -47,7 +47,7 @@ function App() {
                                 <Profile/>
                             </ProtectedRoute>
                         }/>
-                        {/*<Route path="/profile/:uid" element={<PublicProfile/>}/>*/}
+                        <Route path="/profile/:uid" element={<PublicProfile/>}/>
 
                     </Routes>
                 </Container>
