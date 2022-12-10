@@ -2,7 +2,7 @@ import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {registerThunk} from "./users-thunk";
 import {current} from "@reduxjs/toolkit";
-import {Navigate} from "react-router";
+import {Navigate, useNavigate} from "react-router";
 
 const Register = () => {
     const {currentUser} = useSelector((state) => state.users)
@@ -12,9 +12,9 @@ const Register = () => {
     const handleRegisterBtn = () => {
         dispatch(registerThunk({username, password}))
     }
-
+    const navigate = useNavigate();
     if(currentUser) {
-        return (<Navigate to={'/profile'}/>)
+        navigate('/profile');
     }
 
     return(
