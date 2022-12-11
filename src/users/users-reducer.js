@@ -29,8 +29,14 @@ const usersReducer = createSlice({
                                          [registerThunk.fulfilled]: (state, action) => {
                                              state.currentUser = action.payload
                                          },
+                                         [registerThunk.rejected]: (state, action) => {
+                                             alert('Username already taken!')
+                                         },
                                          [loginThunk.fulfilled]: (state, action) => {
                                              state.currentUser = action.payload
+                                         },
+                                         [loginThunk.rejected]: (state, action) => {
+                                             alert('Username or password incorrect!')
                                          },
                                          [findAllUsersThunk.fulfilled]: (state, action) => {
                                              state.users = action.payload

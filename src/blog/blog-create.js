@@ -1,26 +1,35 @@
 import {useState} from "react";
 import ReactMarkdown from "react-markdown";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Button} from "react-bootstrap";
 import {createBlogThunk} from "./blog-thunks";
 import {useNavigate} from "react-router";
 
 const BlogCreate = () => {
+    const {currentUser} = useSelector((state) => state.users)
+    const [title, setTitle] = useState("");
     const [summary, setSummary] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const createBlog = () => {
-        dispatch(createBlogThunk({
-            "title": "title2",
-            "author": "alice",
-            "summary" : summary
-        }))
-       // navigate('/blog')
+        if (summary === '') {
+
+        } else {
+            dispatch(createBlogThunk({
+                "title": title,
+                "blog" : summary,
+            }))
+            navigate('/blog')
+        }
+
     }
     return(
         <div>
             <form>
-                <textarea value={summary} onChange={(event) => setSummary(event.target.value)}></textarea>
+
+                <input value={title} placeholder={'Blog title'} onChange={(event) => setTitle(event.target.value)}/>
+
+                <textarea value={summary} placeholder={'Blog body'} onChange={(event) => setSummary(event.target.value)}/>
             </form>
 
 
@@ -28,6 +37,8 @@ const BlogCreate = () => {
 
 
             <Button onClick={createBlog}>Create Blog</Button>
+
+
         </div>)
 }
 
