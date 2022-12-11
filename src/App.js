@@ -16,9 +16,20 @@ import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
 import randomMealReducer from "./random-recipes/random-meal-reducer";
 import mealDetailsReducer from "./meal-details/meal-details-reducer";
+import usersReducer from "./users/users-reducer";
+import Blog from "./blog";
+import BlogDetails from "./blog/blog-details";
+import BlogCreate from "./blog/blog-create";
+import BlogReducer from "./blog/blog-reducer";
 
 const store = configureStore(
-    {reducer: {search: searchReducer, randomMeals: randomMealReducer, mealDetails: mealDetailsReducer}})
+    {reducer: {
+            search: searchReducer,
+            randomMeals: randomMealReducer,
+            mealDetails: mealDetailsReducer,
+            blog: BlogReducer,
+            users: usersReducer,
+            }})
 
 
 function App() {
@@ -36,6 +47,9 @@ function App() {
                                element={<Search/>}/>
                         <Route path="/meal/details/:mid"
                                element={<MealDetails/>}/>
+                        <Route path="/blog" element={<Blog/>}/>
+                        <Route path="/blog/create" element={<BlogCreate/>}/>
+                        <Route path="/blog/details/:bid" element={<BlogDetails/>}/>
                         <Route path="/users" element={<Users/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/register" element={<Register/>}/>
