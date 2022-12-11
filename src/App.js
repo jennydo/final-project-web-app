@@ -14,6 +14,8 @@ import CurrentUser from "./users/current-user";
 import {configureStore} from "@reduxjs/toolkit";
 import searchReducer from "./search/search-reducer";
 import {Provider} from "react-redux";
+import PublicProfile from "./users/public-profile";
+import usersReducer from "./users/users-reducer";
 import randomMealReducer from "./random-recipes/random-meal-reducer";
 import mealDetailsReducer from "./meal-details/meal-details-reducer";
 import usersReducer from "./users/users-reducer";
@@ -23,6 +25,7 @@ import BlogCreate from "./blog/blog-create";
 import BlogReducer from "./blog/blog-reducer";
 
 const store = configureStore(
+<<<<<<< HEAD
     {reducer: {
             search: searchReducer,
             randomMeals: randomMealReducer,
@@ -30,6 +33,10 @@ const store = configureStore(
             blog: BlogReducer,
             users: usersReducer,
             }})
+=======
+    {reducer: {search: searchReducer, randomMeals: randomMealReducer, mealDetails: mealDetailsReducer,users: usersReducer}})
+
+>>>>>>> 48628833e6a5353b23ebecec0b222126343dca2d
 
 
 function App() {
@@ -37,7 +44,7 @@ function App() {
         <Provider store={store}>
 
         <BrowserRouter>
-            {/*<CurrentUser>*/}
+            <CurrentUser>
                 <Navbar/>
                 <Container>
                     <Routes>
@@ -58,10 +65,11 @@ function App() {
                                 <Profile/>
                             </ProtectedRoute>
                         }/>
+                        <Route path="/profile/:uid" element={<PublicProfile/>}/>
 
                     </Routes>
                 </Container>
-            {/*</CurrentUser>*/}
+            </CurrentUser>
         </BrowserRouter>
         </Provider>
     );
