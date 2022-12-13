@@ -12,7 +12,6 @@ const Profile = () => {
         navigate('/login')
     }
 
-
     return (
         <>
             <h1>Profile</h1>

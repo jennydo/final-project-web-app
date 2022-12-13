@@ -1,12 +1,11 @@
 import {useState} from "react";
 import ReactMarkdown from "react-markdown";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Button} from "react-bootstrap";
 import {createBlogThunk} from "./blog-thunks";
 import {useNavigate} from "react-router";
 
 const BlogCreate = () => {
-    const {currentUser} = useSelector((state) => state.users)
     const [title, setTitle] = useState("");
     const [summary, setSummary] = useState("");
     const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const BlogCreate = () => {
         } else {
             dispatch(createBlogThunk({
                 "title": title,
-                "blog" : summary,
+                "blog" : summary
             }))
             navigate('/blog')
         }

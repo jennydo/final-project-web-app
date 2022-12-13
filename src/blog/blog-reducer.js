@@ -18,7 +18,7 @@ const BlogReducer = createSlice({
         [createBlogThunk.fulfilled]:
             (state, { payload }) => {
                 state.loading = false
-                state.blog = payload[0]
+                state.blog.push(payload)
             },
         [getAllBlogsThunk.pending]:
             (state) => {
