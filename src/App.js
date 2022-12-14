@@ -50,9 +50,9 @@ function App() {
                                element={<MealDetails/>}/>
                         <Route path="/blog" element={<Blog/>}/>
                         <Route path="/blog/create" element={
-                            <ProtectedBlogCreate>
+                            <ProtectedRoute>
                                 <BlogCreate/>
-                            </ProtectedBlogCreate>}/>
+                            </ProtectedRoute>}/>
                         <Route path="/blog/details/:bid" element={<BlogDetails/>}/>
                         <Route path="/users" element={<Users/>}/>
                         <Route path="/login" element={<Login/>}/>
