@@ -72,7 +72,6 @@ const Register = () => {
                     Please enter a last name!
                 </span>
             </Alert>
-
             <Alert variant="danger" onClose={() => setUsernameAlert(false)} className={usernameAlert ? 'd-block' : 'd-none'} dismissible>
                 <span>
                     Please enter a username!
