@@ -10,22 +10,22 @@ import {userLikesFoodThunk} from "../likes/likes-thunks";
 import {Button} from "react-bootstrap";
 import {createReviewThunk} from "../reviews/reviews-thunks";
 
-// const comments = [
-//     {
-//         "username": "alice",
-//         "review": "good food",
-//         "time": "2h",
-//         "likes": "2",
-//         "liked": true,
-//         "dislikes": "4",
-//         "disliked": false
-//     }
-// ]
+const comments = [
+    {
+        "username": "alice",
+        "review": "good food",
+        "time": "2h",
+        "likes": "2",
+        "liked": true,
+        "dislikes": "4",
+        "disliked": false
+    }
+]
 
 const MealDetails = () => {
     const {currentUser} = useSelector((state) => state.users)
     let [review, setReview] = useState('');
-    const {comments} = useSelector((state) => state.reviews);
+    // const {comments} = useSelector((state) => state.reviews);
     const {meal, loading} = useSelector((state) => state.mealDetails)
     const dispatch = useDispatch()
     const {mid} = useParams();
@@ -112,7 +112,7 @@ const MealDetails = () => {
                              <div>
                                  {currentUser && <>
                                      <span>
-                                         <button className="btn btn-primary float-end mb-2 ps-3 pe-3 fw-bold"
+                                         <button className="btn btn-primary float-end mb-3 ps-3 pe-3 fw-bold"
                                                  onClick={
                                                      (newReview = {
                                                          "username": "alice",
@@ -129,7 +129,7 @@ const MealDetails = () => {
 
                                      <input
                                          onChange={(e) => setReview(e.target.value)}
-                                         className="form-control mb-2 w-75"
+                                         className="form-control mb-3 w-75"
                                          placeholder="review"
                                          type="text"
                                          value={review}/>

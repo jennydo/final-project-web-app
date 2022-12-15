@@ -74,7 +74,7 @@ const Login = () => {
 
                 <Form.Group className="mb-3" controlId="registerEmail">
                     <Form.Label>Password *</Form.Label>
-                    <Form.Control placeholder="Enter password" value={password}
+                    <Form.Control placeholder="Enter password" type={'password'} value={password}
                                   onChange={(event => setPassword(event.target.value))} />
                 </Form.Group>
 
