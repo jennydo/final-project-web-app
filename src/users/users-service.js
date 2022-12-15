@@ -36,6 +36,10 @@ export const findAllUsers = async () => {
     return response.data
 }
 
+export const updateProfile = async (updatedProfile) => {
+    const response = await api.post(`${BASE_API_URL}/profile/update`, updatedProfile)
+    return response.data
+}
 export const createUser = () => {
 
 }
@@ -45,6 +49,6 @@ const deleteUser = () => {}
 
 export const updateUser = async (user) => {
     const response = await axios
-        .put(`${USER_API_URL}/${user.uid}`, user);
+        .put(`${USER_API_URL}/${user._id}`, user);
     return user;
 }

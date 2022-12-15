@@ -7,8 +7,10 @@ import {
     logout,
     profile,
     register,
-    updateUser
+    updateUser,
+    updateProfile
 } from "./users-service";
+import {create} from "axios";
 
 
 
@@ -21,6 +23,11 @@ export const logoutThunk = createAsyncThunk(
 export const profileThunk = createAsyncThunk(
     'profile',
     async () => await profile()
+)
+
+export const updateProfileThunk = createAsyncThunk(
+    'profileUpdate',
+    async (newInfo) => await updateProfile(newInfo)
 )
 
 export const findUserByIdThunk = createAsyncThunk(
