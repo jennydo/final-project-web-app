@@ -37,8 +37,7 @@ const BlogCreate = () => {
 
 
             <Container>
-                <Row className={'mb-3 mt-2'} >
-                    <Col md={6} >
+
                         <span className={'text-muted'}>Write your blog here</span>
                         <Form>
                             <FloatingLabel controlId="blogTitle"
@@ -64,17 +63,14 @@ const BlogCreate = () => {
                                 Write your blog using Markdown.</Form.Text>
                         </Form>
 
-                    </Col>
+                        <hr/>
 
-                    <Col>
                         <hr className={'d-block d-md-none'} />
                         <span className={'text-muted'}>Preview</span>
                         <h3>{title}</h3>
                         <ReactMarkdown children={summary}/>
-                    </Col>
-                </Row>
 
-                <Button onClick={createBlog} className={'mb-3'}>Publish Blog</Button>
+                <Button onClick={createBlog} className={'mb-3 mt-5'}>Publish Blog</Button>
 
 
 
