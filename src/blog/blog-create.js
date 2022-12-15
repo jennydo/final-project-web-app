@@ -8,17 +8,26 @@ import {Link} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {Alert} from "react-bootstrap";
 
 const BlogCreate = () => {
+
     const [title, setTitle] = useState("");
     const [summary, setSummary] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const createBlog = () => {
-        if (summary === '') {
 
+    const [titleAlert, setTitleAlert] = useState(false);
+    const [summaryAlert, setSummaryAlert] = useState(false);
+
+    const createBlog = () => {
+        setTitleAlert(false);
+        setSummaryAlert(false);
+
+        if (title === '') {
+            setTitleAlert(true);
+        } else if (summary === '') {
+            setSummaryAlert(true)
         } else {
             dispatch(createBlogThunk({
                 "title": title,
@@ -35,13 +44,23 @@ const BlogCreate = () => {
             </Link>
             <h2>Write a blog</h2>
 
+            <Alert variant="danger" onClose={() => setTitleAlert(false)} className={titleAlert ? 'd-block' : 'd-none'} dismissible>
+                <span>
+                    Please enter the title of the blog!
+                </span>
+            </Alert>
+            <Alert variant="danger" onClose={() => setSummaryAlert(false)} className={summaryAlert ? 'd-block' : 'd-none'} dismissible>
+                <span>
+                    Please enter the body of the blog!
+                </span>
+            </Alert>
 
             <Container>
 
                         <span className={'text-muted'}>Write your blog here</span>
                         <Form>
                             <FloatingLabel controlId="blogTitle"
-                                           label="Title"
+                                           label="Title *"
                                            className="mb-3"
                             >
                                 <Form.Control
@@ -50,7 +69,7 @@ const BlogCreate = () => {
                                     placeholder="Title"
                                 onChange={(event) => setTitle(event.target.value)}/>
                             </FloatingLabel>
-                            <FloatingLabel controlId="blogBody" label="Body">
+                            <FloatingLabel controlId="blogBody" label="Body *">
                                 <Form.Control
                                     as="textarea"
                                     placeholder="Body"

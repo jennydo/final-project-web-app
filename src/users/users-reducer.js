@@ -15,36 +15,54 @@ const usersReducer = createSlice({
                                          users: [],
                                          loading: false,
                                          currentUser: null,
-                                         publicProfile: null
+                                         publicProfile: null,
+                                         errorLogin: false,
+                                         errorRegister: false
                                      },
                                      extraReducers: {
                                          [findUserByIdThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.publicProfile = action.payload
                                          },
                                          [logoutThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.currentUser = null
                                          },
                                          [profileThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.currentUser = action.payload
                                          },
                                          [registerThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.currentUser = action.payload
                                          },
                                          [registerThunk.rejected]: (state, action) => {
-                                             alert('Username already taken!')
+                                             state.errorRegister = true;
+                                             state.errorLogin = false;
                                          },
                                          [loginThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.currentUser = action.payload
                                          },
                                          [loginThunk.rejected]: (state, action) => {
-                                             alert('Username or password incorrect!')
+                                            state.errorLogin = true;
+                                            state.errorRegister = false;
                                          },
                                          [findAllUsersThunk.fulfilled]: (state, action) => {
+                                             state.errorLogin = false;
+                                             state.errorRegister = false;
                                              state.users = action.payload
                                              state.loading = false
                                          },
                                          [updateUserThunk.fulfilled]:
                                              (state, { payload }) => {
+                                                 state.errorLogin = false;
+                                                 state.errorRegister = false;
                                                  state.loading = false
                                                  const userNdx = state.users
                                                      .findIndex((user) => user.uid === payload.uid)
@@ -55,6 +73,8 @@ const usersReducer = createSlice({
                                              },
                                          [updateProfileThunk.fulfilled]:
                                              (state, { payload }) => {
+                                                 state.errorLogin = false;
+                                                 state.errorRegister = false;
                                                  state.loading = false
                                                  state.currentUser = payload
                                              },

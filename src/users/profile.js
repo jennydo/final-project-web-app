@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useState} from "react";
+import {Alert} from "react-bootstrap";
 const Profile = () => {
     const navigate = useNavigate()
     const {currentUser} = useSelector((state) => state.users)
@@ -14,34 +15,67 @@ const Profile = () => {
     const [email, setEmail] = useState(currentUser.email);
     const [password, setPassword] = useState(currentUser.password);
     const [editProfile, setEditProfile] = useState(false);
+
+    const [firstNameAlert, setFirstNameAlert] = useState(false);
+    const [lastNameAlert, setLastNameAlert] = useState(false);
+    const [passwordAlert, setPasswordAlert] = useState(false);
+
     const dispatch = useDispatch()
     const handleLogoutBtn = () => {
         dispatch(logoutThunk())
         navigate('/login')
     }
     const updateUserProfile = () => {
-        dispatch(updateProfileThunk({
-            ...currentUser,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password
-        }))
-        setEditProfile(false)
-        dispatch()
+        setFirstNameAlert(false);
+        setLastNameAlert(false);
+        setPasswordAlert(false);
+
+        if (firstName === '') {
+            setFirstNameAlert(true);
+        } else if (lastName === '') {
+            setLastNameAlert(true);
+        } else if (password === '') {
+            setPasswordAlert(true);
+        } else {
+            dispatch(updateProfileThunk({
+                ...currentUser,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                password: password
+            }))
+            setEditProfile(false)
+        }
+
     }
     console.log(currentUser);
 
     return (
         <>
             <h2>Profile</h2>
+
+            <Alert variant="danger" onClose={() => setFirstNameAlert(false)} className={firstNameAlert ? 'd-block' : 'd-none'} dismissible>
+                <span>
+                    The field First Name is required!
+                </span>
+            </Alert>
+            <Alert variant="danger" onClose={() => setLastNameAlert(false)} className={lastNameAlert ? 'd-block' : 'd-none'} dismissible>
+                <span>
+                    The field last name is required!
+                </span>
+            </Alert>
+            <Alert variant="danger" onClose={() => setPasswordAlert(false)} className={passwordAlert ? 'd-block' : 'd-none'} dismissible>
+                <span>
+                    The field password is required!
+                </span>
+            </Alert>
             {
                 currentUser &&
                 <>
 
                     <Form>
                         <Form.Group as={Row} className="mb-3" controlId="profileFirstName">
-                            <Form.Label column sm="2">
+                            <Form.Label column sm="2" className={'text-secondary'}>
                                 First Name
                             </Form.Label>
                             <Col sm="10">
@@ -51,7 +85,7 @@ const Profile = () => {
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="profileLastName">
-                            <Form.Label column sm="2">
+                            <Form.Label column sm="2" className={'text-secondary'}>
                                 Last Name
                             </Form.Label>
                             <Col sm="10">
@@ -61,7 +95,7 @@ const Profile = () => {
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="profileUsername">
-                            <Form.Label column sm="2">
+                            <Form.Label column sm="2" className={'text-secondary'}>
                                 Username
                             </Form.Label>
                             <Col sm="10">
@@ -78,7 +112,7 @@ const Profile = () => {
                         </Form.Group>
 
                         <Form.Group as={Row} className="mb-3" controlId="profileEmail">
-                            <Form.Label column sm="2">
+                            <Form.Label column sm="2" className={'text-secondary'}>
                                 Email
                             </Form.Label>
                             <Col sm="10">
@@ -88,7 +122,7 @@ const Profile = () => {
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="profilePassword">
-                            <Form.Label column sm="2">
+                            <Form.Label column sm="2" className={'text-secondary'}>
                                 Password
                             </Form.Label>
                             <Col sm="10">
