@@ -1,4 +1,3 @@
-
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Row from "react-bootstrap/Row";
@@ -24,7 +23,7 @@ import {parseTime} from "../blog/parseTime";
 // =======
 import {userLikesFoodThunk} from "../likes/likes-thunks";
 import {useNavigate} from "react-router";
-
+import {createReviewThunk} from "../reviews/reviews-thunks";
 const comments = [
     {
         "username": "alice",
@@ -39,6 +38,8 @@ const comments = [
 
 const MealDetails = () => {
     const {currentUser} = useSelector((state) => state.users)
+    let [review, setReview] = useState('');
+    // const {comments} = useSelector((state) => state.reviews);
     const {meal, loading} = useSelector((state) => state.mealDetails)
     const dispatch = useDispatch()
     const {mid} = useParams();
@@ -86,7 +87,9 @@ const MealDetails = () => {
                 !loading && <>
 
                     <h2>{meal.strMeal}</h2>
-                    <i onClick={() => {dispatch(userLikesFoodThunk(mid))}}
+                    <i onClick={() => {
+                        dispatch(userLikesFoodThunk(mid))
+                    }}
                        className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
                     <h5><span className="badge bg-secondary">{meal.strArea}</span> <span
                         className="badge bg-secondary">{meal.strCategory}</span></h5>
@@ -97,7 +100,8 @@ const MealDetails = () => {
 
                             <h4>Youtube Video:</h4>
                             {
-                                meal.strYoutube &&  <YoutubeEmbed embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)} />
+                                meal.strYoutube &&
+                                <YoutubeEmbed embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)}/>
                             }
                         </Col>
                         <Col>
@@ -124,8 +128,8 @@ const MealDetails = () => {
 
                     <hr/>
 
-                    <h4>Comments<span className={'text-secondary'}><i className="bi bi-dot"></i>{comments.length}</span></h4>
-
+                    <h4>Comments<span className={'text-secondary'}><i className="bi bi-dot"></i>{comments.length}</span>
+                    </h4>
 
 
                     <ul className={'list-group mb-3'}>
@@ -140,7 +144,7 @@ const MealDetails = () => {
                                                     placeholder="Leave a comment here"
                                                     value={comment}
                                                     onChange={(event) => setComment(event.target.value)}
-                                                    style={{ height: '6rem' }}
+                                                    style={{height: '6rem'}}
                                                 />
                                             </FloatingLabel>
                                             <Form.Text>
@@ -149,10 +153,11 @@ const MealDetails = () => {
                                         </Form.Group>
 
 
-                                        <Button variant="primary" onClick={() => postMealComment()} disabled={comment === ''}>Post Comment</Button>
+                                        <Button variant="primary" onClick={() => postMealComment()}
+                                                disabled={comment === ''}>Post Comment</Button>
                                     </Form>
                                     :
-                                    <Alert  variant={'warning'} className={'mb-3'}>
+                                    <Alert variant={'warning'} className={'mb-3'}>
                                         Please login to comment.
                                     </Alert>
                             }
@@ -160,72 +165,155 @@ const MealDetails = () => {
                         {
                             comments.map(u =>
                                 <li className={'list-group-item'}>
-                                    <span className={'fw-bold'}>Wrote by <Link className={'text-black'} to={'/'}>{u.username}</Link></span>
+                                    <span className={'fw-bold'}>Wrote by <Link className={'text-black'}
+                                                                               to={'/'}>{u.username}</Link></span>
                                     <span><i className="bi bi-dot"></i>{parseTime(new Date())}</span>
                                     <p>{u.comment}</p>
-                            </li>)
+                                </li>)
                         }
                     </ul>
                 </>
-                         //     <h2>{meal.strMeal}</h2>
-                         //
-                         //     <i onClick={() => {
-                         //         dispatch(userLikesFoodThunk(mid))
-                         //     }} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
-                         //
-                         //     <h5><span className="badge bg-secondary">{meal.strArea}</span> <span
-                         //         className="badge bg-secondary">{meal.strCategory}</span></h5>
-                         //
-                         //     <Row>
-                         //         <Col sm={'12'} md={'6'}>
-                         //             <img className={'w-100 mb-3'} alt={'Picture of ' + meal.strMeal}
-                         //                  src={meal.strMealThumb}/>
-                         //
-                         //             <h4>Youtube Video:</h4>
-                         //             {
-                         //                 meal.strYoutube && <YoutubeEmbed
-                         //                                     embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)}/>
-                         //             }
-                         //         </Col>
-                         //         <Col>
-                         //             <h4>Ingredients:</h4>
-                         //             <ul>
-                         //                 {ingredientList.map(u => !u.includes('null') && u.length > 2 && <li>
-                         //                     {u}
-                         //                 </li>)}
-                         //             </ul>
-                         //             <h4>Instructions:</h4>
-                         //             <ol>
-                         //                 {
-                         //                     typeof meal.strInstructions !== "undefined" &&
-                         //                     meal.strInstructions.split("\r\n").map(u =>
-                         //                     u.length > 4 && !u.toLowerCase().includes("step") && <li>
-                         //                         {u}
-                         //                     </li>
-                         //                     )
-                         //                 }
-                         //
-                         //             </ol>
-                         //         </Col>
-                         //     </Row>
-                         //
-                         //     <hr/>
-                         //
-                         //     <h3>Comments</h3>
-                         //
-                         //     {currentUser && <>
-                         //     <Button onClick={() => navigate('create')}>Create</Button>
-                         //     </>}
-                         //
-                         //     <ul className={'list-group'}>
-                         //         {
-                         //             comments.map(u => <CommentComponent comment={u}/>)
-                         //         }
-                         //     </ul>
-                         //
-                         // </>
             }
-        </div>
+                         {/*//     <h2>{meal.strMeal}</h2>*/}
+                         {/*//*/}
+                         {/*//     <i onClick={() => {*/}
+           {/*              //         dispatch(userLikesFoodThunk(mid))*/}
+           {/*              //     }} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>*/}
+           {/*              //*/}
+           {/*              //     <h5><span className="badge bg-secondary">{meal.strArea}</span> <span*/}
+           {/*              //         className="badge bg-secondary">{meal.strCategory}</span></h5>*/}
+           {/*              //*/}
+           {/*              //     <Row>*/}
+           {/*              //         <Col sm={'12'} md={'6'}>*/}
+           {/*              //             <img className={'w-100 mb-3'} alt={'Picture of ' + meal.strMeal}*/}
+           {/*              //                  src={meal.strMealThumb}/>*/}
+           {/*              //*/}
+           {/*              //             <h4>Youtube Video:</h4>*/}
+           {/*              //             {*/}
+           {/*              //                 meal.strYoutube && <YoutubeEmbed*/}
+           {/*              //                                     embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)}/>*/}
+           {/*              //             }*/}
+           {/*              //         </Col>*/}
+           {/*              //         <Col>*/}
+           {/*              //             <h4>Ingredients:</h4>*/}
+           {/*              //             <ul>*/}
+           {/*              //                 {ingredientList.map(u => !u.includes('null') && u.length > 2 && <li>*/}
+           {/*              //                     {u}*/}
+           {/*              //                 </li>)}*/}
+           {/*              //             </ul>*/}
+           {/*              //             <h4>Instructions:</h4>*/}
+           {/*              //             <ol>*/}
+           {/*              //                 {*/}
+           {/*              //                     typeof meal.strInstructions !== "undefined" &&*/}
+           {/*              //                     meal.strInstructions.split("\r\n").map(u =>*/}
+           {/*              //                     u.length > 4 && !u.toLowerCase().includes("step") && <li>*/}
+           {/*              //                         {u}*/}
+           {/*              //                     </li>*/}
+           {/*              //                     )*/}
+           {/*              //                 }*/}
+           {/*              //*/}
+           {/*              //             </ol>*/}
+           {/*              //         </Col>*/}
+           {/*              //     </Row>*/}
+           {/*              //*/}
+           {/*              //     <hr/>*/}
+           {/*              //*/}
+           {/*              //     <h3>Comments</h3>*/}
+           {/*              //*/}
+           {/*              //     {currentUser && <>*/}
+           {/*              //     <Button onClick={() => navigate('create')}>Create</Button>*/}
+           {/*              //     </>}*/}
+           {/*              //*/}
+           {/*              //     <ul className={'list-group'}>*/}
+           {/*              //         {*/}
+           {/*              //             comments.map(u => <CommentComponent comment={u}/>)*/}
+           {/*              //         }*/}
+           {/*              //     </ul>*/}
+           {/*              //*/}
+           {/*              // </>*/}
+           {/*              // /!*    <h2>{meal.strMeal}</h2>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <i onClick={() => {*!/*/}
+           {/*              // /!*        dispatch(userLikesFoodThunk(mid))*!/*/}
+           {/*              // /!*    }} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <h5><span className="badge bg-secondary">{meal.strArea}</span> <span*!/*/}
+           {/*              // /!*        className="badge bg-secondary">{meal.strCategory}</span></h5>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <Row>*!/*/}
+           {/*              // /!*        <Col sm={'12'} md={'6'}>*!/*/}
+           {/*              // /!*            <img className={'w-100 mb-3'} alt={'Picture of ' + meal.strMeal}*!/*/}
+           {/*              // /!*                 src={meal.strMealThumb}/>*!/*/}
+           {/*              //*/}
+           {/*              // /!*            <h4>Youtube Video:</h4>*!/*/}
+           {/*              // /!*            {*!/*/}
+           {/*              // /!*                meal.strYoutube && <YoutubeEmbed*!/*/}
+           {/*              // /!*                                    embedId={meal.strYoutube.substring(meal.strYoutube.indexOf('=') + 1)}/>*!/*/}
+           {/*              // /!*            }*!/*/}
+           {/*              // /!*        </Col>*!/*/}
+           {/*              // /!*        <Col>*!/*/}
+           {/*              // /!*            <h4>Ingredients:</h4>*!/*/}
+           {/*              // /!*            <ul>*!/*/}
+           {/*              // /!*                {ingredientList.map(u => !u.includes('null') && u.length > 2 && <li>*!/*/}
+           {/*              // /!*                    {u}*!/*/}
+           {/*              // /!*                </li>)}*!/*/}
+           {/*              // /!*            </ul>*!/*/}
+           {/*              // /!*            <h4>Instructions:</h4>*!/*/}
+           {/*              // /!*            <ol>*!/*/}
+           {/*              // /!*                {*!/*/}
+           {/*              // /!*                    typeof meal.strInstructions !== "undefined" &&*!/*/}
+           {/*              // /!*                    meal.strInstructions.split("\r\n").map(u =>*!/*/}
+           {/*              // /!*                    u.length > 4 && !u.toLowerCase().includes("step") && <li>*!/*/}
+           {/*              // /!*                        {u}*!/*/}
+           {/*              // /!*                    </li>*!/*/}
+           {/*              // /!*                    )*!/*/}
+           {/*              // /!*                }*!/*/}
+           {/*              //*/}
+           {/*              // /!*            </ol>*!/*/}
+           {/*              // /!*        </Col>*!/*/}
+           {/*              // /!*    </Row>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <hr/>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <h3>Comments</h3>*!/*/}
+           {/*              // /!*    <div>*!/*/}
+           {/*              // /!*        {currentUser && <>*!/*/}
+           {/*              // /!*            <span>*!/*/}
+           {/*              // /!*                <button className="btn btn-primary float-end mb-3 ps-3 pe-3 fw-bold"*!/*/}
+           {/*              // /!*                        onClick={*!/*/}
+           {/*              // /!*                            (newReview = {*!/*/}
+           {/*              // /!*                                "username": "alice",*!/*/}
+           {/*              // /!*                                "review": "good food",*!/*/}
+           {/*              // /!*                                "time": "2h",*!/*/}
+           {/*              // /!*                                "likes": "2",*!/*/}
+           {/*              // /!*                                "liked": true,*!/*/}
+           {/*              // /!*                                "dislikes": "4",*!/*/}
+           {/*              // /!*                                "disliked": false*!/*/}
+           {/*              // /!*                            }) => {*!/*/}
+           {/*              // /!*                                dispatch(createReviewThunk(newReview))}}>*!/*/}
+           {/*              // /!*                Review*!/*/}
+           {/*              // /!*            </button>*!/*/}
+           {/*              //*/}
+           {/*              // /!*            <input*!/*/}
+           {/*              // /!*                onChange={(e) => setReview(e.target.value)}*!/*/}
+           {/*              // /!*                className="form-control mb-3 w-75"*!/*/}
+           {/*              // /!*                placeholder="review"*!/*/}
+           {/*              // /!*                type="text"*!/*/}
+           {/*              // /!*                value={review}/>*!/*/}
+           {/*              //*/}
+           {/*              // /!*            </span>*!/*/}
+           {/*              // /!*        </>}*!/*/}
+           {/*              // /!*    </div>*!/*/}
+           {/*              //*/}
+           {/*              // /!*    <ul className={'list-group'}>*!/*/}
+           {/*              // /!*        {*!/*/}
+           {/*              // /!*            comments.map(u => <CommentComponent comment={u}/>)*!/*/}
+           {/*              // /!*        }*!/*/}
+           {/*              // /!*    </ul>*!/*/}
+
+           {/*   */}
+           {/*// }*/}
+       </div>
     )
 }
 
