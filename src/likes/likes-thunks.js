@@ -1,9 +1,13 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {userLikesFood} from "./likes-service";
+import {findFoodLikedByUser, userLikesFood} from "./likes-service";
 
 export const userLikesFoodThunk = createAsyncThunk(
     'userLikesFood',
     async (like) => {
-        return await userLikesFood(like.uid, like.mid)
+        return await userLikesFood(like.mid)
     }
+)
+export const findFoodLikedByUserThunk = createAsyncThunk(
+    'findFoodLikedByUser',
+    async (uid) => await findFoodLikedByUser(uid)
 )
