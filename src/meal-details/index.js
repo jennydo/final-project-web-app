@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,21 +8,24 @@ import {mealDetailsThunks} from "./meal-details-thunks";
 import YoutubeEmbed from "./youtube-embed";
 import {userLikesFoodThunk} from "../likes/likes-thunks";
 import {Button} from "react-bootstrap";
+import {createReviewThunk} from "../reviews/reviews-thunks";
 
-const comments = [
-    {
-        "username": "alice",
-        "review": "good food",
-        "time": "2h",
-        "likes": "2",
-        "liked": true,
-        "dislikes": "4",
-        "disliked": false
-    }
-]
+// const comments = [
+//     {
+//         "username": "alice",
+//         "review": "good food",
+//         "time": "2h",
+//         "likes": "2",
+//         "liked": true,
+//         "dislikes": "4",
+//         "disliked": false
+//     }
+// ]
 
 const MealDetails = () => {
     const {currentUser} = useSelector((state) => state.users)
+    let [review, setReview] = useState('');
+    const {comments} = useSelector((state) => state.reviews);
     const {meal, loading} = useSelector((state) => state.mealDetails)
     const dispatch = useDispatch()
     const {mid} = useParams();
@@ -106,10 +109,34 @@ const MealDetails = () => {
                              <hr/>
 
                              <h3>Comments</h3>
+                             <div>
+                                 {currentUser && <>
+                                     <span>
+                                         <button className="btn btn-primary float-end mb-2 ps-3 pe-3 fw-bold"
+                                                 onClick={
+                                                     (newReview = {
+                                                         "username": "alice",
+                                                         "review": "good food",
+                                                         "time": "2h",
+                                                         "likes": "2",
+                                                         "liked": true,
+                                                         "dislikes": "4",
+                                                         "disliked": false
+                                                     }) => {
+                                                         dispatch(createReviewThunk(newReview))}}>
+                                         Review
+                                     </button>
 
-                             {currentUser && <>
-                             <Button onClick={() => navigate('create')}>Create</Button>
-                             </>}
+                                     <input
+                                         onChange={(e) => setReview(e.target.value)}
+                                         className="form-control mb-2 w-75"
+                                         placeholder="review"
+                                         type="text"
+                                         value={review}/>
+
+                                     </span>
+                                 </>}
+                             </div>
 
                              <ul className={'list-group'}>
                                  {
