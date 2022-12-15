@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useState} from "react";
-import {Alert} from "react-bootstrap";
+import {Alert, Badge} from "react-bootstrap";
 const Profile = () => {
     const navigate = useNavigate()
     const {currentUser} = useSelector((state) => state.users)
@@ -72,6 +72,8 @@ const Profile = () => {
             {
                 currentUser &&
                 <>
+
+                    <h5><Badge bg="secondary">{currentUser.role}</Badge></h5>
 
                     <Form>
                         <Form.Group as={Row} className="mb-3" controlId="profileFirstName">

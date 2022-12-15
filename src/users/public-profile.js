@@ -1,22 +1,30 @@
 import {useParams} from "react-router";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findUserByIdThunk} from "./users-thunk";
 import {findReviewsByAuthor} from "../reviews/reviews-service";
 import {findReviewsByAuthorThunk} from "../reviews/reviews-thunks";
 import {Link} from "react-router-dom";
 import {findFollowersThunk, findFollowingThunk, followUserThunk} from "../follows/follows-thunks";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {Badge} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 const PublicProfile = () => {
     const {uid} = useParams()
     const {publicProfile} = useSelector((state) => state.users)
-    const {reviews} = useSelector((state) => state.reviews)
-    const {followers, following} = useSelector((state) => state.follows)
+   const {reviews} = useSelector((state) => state.reviews)
+  const {followers, following} = useSelector((state) => state.follows)
+    const [followed, setFollowed] = useState(false);
     const dispatch = useDispatch()
     const handleFollowBtn = () => {
         dispatch(followUserThunk({
                                      followed: uid
                                  }))
+        setFollowed(!followed)
     }
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
@@ -24,37 +32,99 @@ const PublicProfile = () => {
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
     }, [uid])
+
+
     return(
-        <>
-            <button
-                onClick={handleFollowBtn}
-                className="btn btn-success float-end">
-                Follow
-            </button>
-            <h1>{publicProfile && publicProfile.username}</h1>
-            <ul>
-                {
-                    reviews && reviews.map((review) =>
-                                               <li>
-                                                   <Link to={`/meal/details/${review.idMeal}`}>
-                                                       {review.review} {review.idMeal}
-                                                   </Link>
-                                               </li>
-                            )
-                }
-            </ul>
-            <h2>Following</h2>
-            <div className="list-group">
-                {
-                    following && following.map((follow) =>
-                                                   <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
-                                                       {follow.followed.username}
-                                                   </Link>
-                              )
-                }
+        <div className={'mb-3 mt-2'}>
+            <div className={'mb-2'}>
+            <Link to={-1} className={'text-decoration-none text-secondary'}>
+                <i className="bi bi-arrow-left me-1"></i>Back
+            </Link>
             </div>
 
-        </>
+
+
+            { publicProfile &&
+                <>
+                    {
+                        followed ?
+                            <Button onClick={handleFollowBtn} variant={'outline-success'} className={'float-end'}>Followed</Button>
+                            :
+                        <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
+                    }
+
+                <h2>@{publicProfile.username}</h2>
+
+                    <h5><Badge bg={'secondary'}>{publicProfile.role}</Badge></h5>
+                <Container>
+                    <Form>
+                        <Form.Group as={Row} className="mb-3" controlId="profileFirstName">
+                            <Form.Label column sm="2" className={'text-secondary'}>
+                                First Name
+                            </Form.Label>
+                            <Col sm="10">
+                                <Form.Control type="text" value={publicProfile.firstName} plaintext readOnly/>
+                            </Col>
+                        </Form.Group>
+                        <Form.Group as={Row} className="mb-3" controlId="profileLastName">
+                            <Form.Label column sm="2" className={'text-secondary'} >
+                                Last Name
+                            </Form.Label>
+                            <Col sm="10">
+                                <Form.Control type="text" value={publicProfile.lastName} plaintext readOnly/>
+                            </Col>
+                        </Form.Group>
+
+                        <Form.Group as={Row} className="mb-3" controlId="profileEmail">
+                            <Form.Label column sm="2" className={'text-secondary'}>
+                                Email
+                            </Form.Label>
+                            <Col sm="10">
+                                <Form.Control type="email" value={publicProfile.email} plaintext readOnly/>
+                            </Col>
+                        </Form.Group>
+                    </Form>
+
+                    <h4>Comments</h4>
+                    <ul className={'list-group'}>
+                        {
+                            reviews &&
+                            reviews.length === 0 ?
+                                <p>This user haven't posted any comments yet.</p>
+                                :
+
+                            reviews.map((review) =>
+                                                       <li>
+                                                           <Link to={`/meal/details/${review.idMeal}`}>
+                                                               {review.review} {review.idMeal}
+                                                           </Link>
+                                                       </li>
+                                    )
+
+                        }
+                    </ul>
+                    <h4>Following</h4>
+                    <ul className={'list-group'}>
+
+
+                        {
+                            following &&
+                            reviews.length === 0 ?
+                                <p>This user haven't followed anyone yet.</p>
+                                :
+                                following.map((follow) =>
+                                                           <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
+                                                               {follow.followed.username}
+                                                           </Link>
+                                      )
+                        }
+                    </ul>
+                </Container>
+                </>
+            }
+
+
+        </div>
     )
 }
 

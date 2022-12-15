@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import {Alert} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const Register = () => {
     const {currentUser, errorRegister} = useSelector((state) => state.users)
@@ -151,6 +152,9 @@ const Register = () => {
                         onChange={(event) =>  setRole(event.target.value)}
                     />
                 </Form.Group>
+                <Form.Text>
+                    Already have an account? <Link to={'/login'}>Login</Link>.
+                </Form.Text>
 
                 <Button className={'w-100 mt-3'} variant="primary"
                 onClick={() => handleRegisterBtn()}>

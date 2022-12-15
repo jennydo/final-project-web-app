@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import {Alert} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const Login = () => {
     const {currentUser, errorLogin} = useSelector((state) => state.users)
@@ -74,9 +75,12 @@ const Login = () => {
 
                 <Form.Group className="mb-3" controlId="registerEmail">
                     <Form.Label>Password *</Form.Label>
-                    <Form.Control placeholder="Enter password" value={password}
+                    <Form.Control placeholder="Enter password" value={password} type={'password'}
                                   onChange={(event => setPassword(event.target.value))} />
                 </Form.Group>
+                <Form.Text>
+                    Don't have an account? <Link to={'/register'}>Register</Link>.
+                </Form.Text>
 
                 <Button className={'w-100 mt-3'} onClick={() => handleLoginBtn()}>Login</Button>
             </Form>

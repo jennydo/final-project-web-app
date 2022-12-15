@@ -4,9 +4,13 @@ import {useSelector} from "react-redux";
 const ProtectedBlogCreate = ({children}) => {
     const {currentUser} = useSelector((state) => state.users)
     if (currentUser) {
-        return (children)
+        if (currentUser.role === 'BLOGGER') {
+            return children
+        } else {
+            return (<Navigate to={'/'}/>)
+        }
     } else {
-        return (<Navigate to={'/blog'}/>)
+        return (<Navigate to={'/login'}/>)
     }
 }
 export default ProtectedBlogCreate;

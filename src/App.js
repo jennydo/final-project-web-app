@@ -23,6 +23,8 @@ import BlogDetails from "./blog/blog-details";
 import BlogCreate from "./blog/blog-create";
 import BlogReducer from "./blog/blog-reducer";
 import ProtectedBlogCreate from "./blog/protected-blog-create";
+import reviewsReducer from "./reviews/reviews-reducer";
+import followsReducer from "./follows/follows-reducer";
 
 const store = configureStore(
     {reducer: {
@@ -31,6 +33,8 @@ const store = configureStore(
             mealDetails: mealDetailsReducer,
             blog: BlogReducer,
             users: usersReducer,
+            reviews: reviewsReducer,
+            follows: followsReducer
             }})
 
 function App() {
@@ -44,15 +48,17 @@ function App() {
                     <Routes>
                         <Route path="/*"
                                element={<Home/>}/>
+                        <Route path="/search/:searchName"
+                               element={<Search/>}/>
                         <Route path="/search"
                                element={<Search/>}/>
                         <Route path="/meal/details/:mid"
                                element={<MealDetails/>}/>
                         <Route path="/blog" element={<Blog/>}/>
                         <Route path="/blog/create" element={
-                            <ProtectedRoute>
+                            <ProtectedBlogCreate>
                                 <BlogCreate/>
-                            </ProtectedRoute>}/>
+                            </ProtectedBlogCreate>}/>
                         <Route path="/blog/details/:bid" element={<BlogDetails/>}/>
                         <Route path="/users" element={<Users/>}/>
                         <Route path="/login" element={<Login/>}/>

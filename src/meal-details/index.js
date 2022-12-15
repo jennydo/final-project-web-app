@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,28 +7,33 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {mealDetailsThunks} from "./meal-details-thunks";
 import YoutubeEmbed from "./youtube-embed";
-
-const comments = [
-    {
-        "username": "alice",
-        "review": "good food",
-        "time": "2h",
-        "likes": "2",
-        "liked": true,
-        "dislikes": "4",
-        "disliked": false
-    }
-]
-
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import {parseTime} from "../blog/parseTime";
+//
+// const comments = [{
+//     "username": "alice",
+//     "userId" : 1234,
+//     "comment": "good food",
+//     "time": "2h"
+// }]
 const MealDetails = () => {
-    const {meal, loading} = useSelector((state) => state.mealDetails)
+    const {currentUser} = useSelector((state) => state.users)
+    const {meal, comments, loading} = useSelector((state) => state.mealDetails)
     const dispatch = useDispatch()
     const {mid} = useParams();
+
+    const [comment, setComment] = useState('');
+
     useEffect(() => {
         dispatch(mealDetailsThunks(mid))
     }, [])
-    console.log(meal)
+
+    const postMealComment = () => {
+        //dispatch(postMealCommentThunk(comment))
+    }
 
         const ingredientList = [20];
         ingredientList[0] = meal.strMeasure1 + " " + meal.strIngredient1;
@@ -99,11 +104,44 @@ const MealDetails = () => {
 
                     <hr/>
 
-                    <h3>Comments</h3>
+                    <h4>Comments<span className={'text-secondary'}><i className="bi bi-dot"></i>{comments.length}</span></h4>
+
+                    {
+                        currentUser ?
+                            <Form>
+                                <Form.Group className={'mb-2'}>
+                                    <FloatingLabel controlId="floatingTextarea2" label="Leave a comment here">
+                                        <Form.Control
+                                            as="textarea"
+                                            placeholder="Leave a comment here"
+                                            value={comment}
+                                            onChange={(event) => setComment(event.target.value)}
+                                            style={{ height: '6rem' }}
+                                        />
+                                    </FloatingLabel>
+                                    <Form.Text>
+                                        Logged in as {currentUser.username}.
+                                    </Form.Text>
+                                </Form.Group>
+
+
+                                <Button variant="primary" onClick={() => postMealComment()} disabled={comment === ''}
+                                        className={'mb-4'}>Post Comment</Button>
+                            </Form>
+                            :
+                            <Alert  variant={'warning'} className={'mb-3'}>
+                                Please login to comment.
+                            </Alert>
+                    }
 
                     <ul className={'list-group'}>
                         {
-                            comments.map(u => <CommentComponent comment={u}/>)
+                            comments.map(u =>
+                                <li className={'list-group-item'}>
+                                    <span className={'fw-bold'}>Wrote by <Link className={'text-black'} to={'/'}>{u.username}</Link></span>
+                                    <span><i className="bi bi-dot"></i>{parseTime(new Date())}</span>
+                                    <p>{u.comment}</p>
+                            </li>)
                         }
                     </ul>
                 </>

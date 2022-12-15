@@ -33,15 +33,16 @@ const BlogDetails = () => {
                         </p>
                     </Alert>
                     :
-
-
-                !loading &&  <>
-
+                !loading &&
+                    <>
                 <h1>{blogById.title}</h1>
                 <div className={'text-secondary'}>
-                <span>By: <Link to={'/profile'} className={' text-secondary'}>
-            {blogById.author !== undefined &&  blogById.author.authorName}
-                </Link></span>
+                    {
+                        blogById.author !== undefined &&
+
+                <span>By: <Link to={'/profile/' + blogById.author.authorId} className={' text-secondary'}>
+                    {blogById.author.authorName}
+                </Link></span> }
                 <i className="bi bi-dot"></i>
                 <span>{parseTime(blogById.time)}</span>
                 </div>

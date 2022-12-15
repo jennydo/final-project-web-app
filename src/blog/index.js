@@ -37,8 +37,8 @@ const Blog = () => {
         <div>
 
             {
-                currentUser === null ?
-                    <p>Please login to create a blog</p> :
+                currentUser !== null &&
+                currentUser.role === 'BLOGGER' &&
                     <Button onClick={() => navigate('create')}>Create</Button>
             }
 
