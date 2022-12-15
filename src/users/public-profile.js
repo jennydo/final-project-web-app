@@ -12,6 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {Badge} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import Follows from "../follows/follows";
 
 const PublicProfile = () => {
     const {uid} = useParams()
@@ -75,14 +76,14 @@ const PublicProfile = () => {
                             </Col>
                         </Form.Group>
 
-                        <Form.Group as={Row} className="mb-3" controlId="profileEmail">
-                            <Form.Label column sm="2" className={'text-secondary'}>
-                                Email
-                            </Form.Label>
-                            <Col sm="10">
-                                <Form.Control type="email" value={publicProfile.email} plaintext readOnly/>
-                            </Col>
-                        </Form.Group>
+                        {/*<Form.Group as={Row} className="mb-3" controlId="profileEmail">*/}
+                        {/*    <Form.Label column sm="2" className={'text-secondary'}>*/}
+                        {/*        Email*/}
+                        {/*    </Form.Label>*/}
+                        {/*    <Col sm="10">*/}
+                        {/*        <Form.Control type="email" value={publicProfile.email} plaintext readOnly/>*/}
+                        {/*    </Col>*/}
+                        {/*</Form.Group>*/}
                     </Form>
 
                     <h4>Comments</h4>
@@ -103,22 +104,24 @@ const PublicProfile = () => {
 
                         }
                     </ul>
-                    <h4>Following</h4>
-                    <ul className={'list-group'}>
+                    {/*<h4>Following</h4>*/}
+                    {/*<ul className={'list-group'}>*/}
+
+                    {/*    {*/}
+                    {/*        following &&*/}
+                    {/*        reviews.length === 0 ?*/}
+                    {/*            <p>This user haven't followed anyone yet.</p>*/}
+                    {/*            :*/}
+                    {/*            following.map((follow) =>*/}
+                    {/*                                       <Link to={`/profile/${follow.followed._id}`} className="list-group-item">*/}
+                    {/*                                           {follow.followed.username}*/}
+                    {/*                                       </Link>*/}
+                    {/*                  )*/}
+                    {/*    }*/}
+                    {/*</ul>*/}
 
 
-                        {
-                            following &&
-                            reviews.length === 0 ?
-                                <p>This user haven't followed anyone yet.</p>
-                                :
-                                following.map((follow) =>
-                                                           <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
-                                                               {follow.followed.username}
-                                                           </Link>
-                                      )
-                        }
-                    </ul>
+                    <Follows uid={uid}/>
                 </Container>
                 </>
             }

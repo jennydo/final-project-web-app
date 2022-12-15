@@ -147,6 +147,12 @@ const Profile = () => {
                     <Button onClick={updateUserProfile}>Save</Button>
 
             }
+
+
+            <Button className={'ms-5'}
+                    onClick={() => navigate('/profile/' + currentUser._id)}>
+                View Public Profile
+            </Button>
             <br/>
 
             <Button className={'btn-danger mt-3'}
