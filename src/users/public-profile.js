@@ -33,9 +33,12 @@ const PublicProfile = () => {
     }
 
 
+
     console.log(reviews)
     console.log(followers)
     console.log(following)
+
+
 
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
@@ -109,6 +112,7 @@ const PublicProfile = () => {
 
                                                          blog.filter(bg => bg.author.authorName === publicProfile.username).map((b) =>
 
+
                                                                        <li className={'list-group-item'}
                                                                            onClick={() => navigate('/blog/details/' + b._id)} key={b._id}>
                                                                            <h5>{b.title}</h5>
@@ -127,6 +131,7 @@ const PublicProfile = () => {
 
                                                                        </li>
                                                      )
+
 
                                                  }
                                              </ul>
