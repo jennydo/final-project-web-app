@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {logoutThunk, updateProfileThunk} from "./users-thunk";
+import {findUserByIdThunk, logoutThunk, updateProfileThunk} from "./users-thunk";
 import {useNavigate} from "react-router";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,6 +7,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useState} from "react";
 import {Alert, Badge} from "react-bootstrap";
+import {Link} from "react-router-dom";
+import {findReviewsByAuthorThunk} from "../reviews/reviews-thunks";
+import {findFollowersThunk, findFollowingThunk} from "../follows/follows-thunks";
 const Profile = () => {
     const navigate = useNavigate()
     const {currentUser} = useSelector((state) => state.users)
@@ -20,9 +23,17 @@ const Profile = () => {
     const [lastNameAlert, setLastNameAlert] = useState(false);
     const [passwordAlert, setPasswordAlert] = useState(false);
 
+    const {reviews} = useSelector((state) => state.reviews)
+    const {followers, following} = useSelector((state) => state.follows)
+    const [followed, setFollowed] = useState(false);
+
     const dispatch = useDispatch()
     const handleLogoutBtn = () => {
         dispatch(logoutThunk())
+        dispatch(findUserByIdThunk(currentUser._id))
+        dispatch(findReviewsByAuthorThunk(currentUser._id))
+        dispatch(findFollowersThunk(currentUser._id))
+        dispatch(findFollowingThunk(currentUser._id))
         navigate('/login')
     }
     const updateUserProfile = () => {
@@ -148,6 +159,46 @@ const Profile = () => {
 
             }
             <br/>
+            <div className={' mt-3 mb-3'}>
+
+
+
+            <h4>Comments</h4>
+            <ul className={'list-group'}>
+                {
+                    reviews &&
+                    reviews.length === 0 ?
+                        <p>This user haven't posted any comments yet.</p>
+                        :
+
+                        reviews.map((review) =>
+                            <li>
+                                <Link to={`/meal/details/${review.idMeal}`}>
+                                    {review.review} {review.idMeal}
+                                </Link>
+                            </li>
+                        )
+
+                }
+            </ul>
+            <h4>Following</h4>
+            <ul className={'list-group'}>
+
+
+                {
+                    following &&
+                    reviews.length === 0 ?
+                        <p>This user haven't followed anyone yet.</p>
+                        :
+                        following.map((follow) =>
+                            <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
+                                {follow.followed.username}
+                            </Link>
+                        )
+                }
+            </ul>
+
+            </div>
 
             <Button className={'btn-danger mt-3'}
                     onClick={handleLogoutBtn}>

@@ -9,7 +9,7 @@ const initialState = {
 
 
 const  mealDetailsReducer = createSlice({
-    name: 'mealDetails',
+    name: 'mealDetailsReducer',
     initialState,
     extraReducers: {
 
@@ -22,10 +22,9 @@ const  mealDetailsReducer = createSlice({
         [mealDetailsThunks.fulfilled]:
             (state, { payload }) => {
                 state.loading = false
-                state.meal = payload.mealDetail
-                state.comments = payload.comments
-
+                state.meal = payload
             },
+
     }
 })
 

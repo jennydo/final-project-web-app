@@ -46,8 +46,8 @@ const BlogDetails = () => {
 {/*                    {blogById.author.authorName}*/}
 {/*                </Link></span> }*/}
                     <span>
-                <span>By: <Link to={'/profile'} className={' text-secondary'}>
-            {blogById.author !== undefined &&  blogById.author.authorName}
+                <span>By: <Link to={'/profile/' + blogById.author.authorId} className={' text-secondary'}>
+            {blogById.author.authorName}
                 </Link>
                 </span>
                         <i onClick={() => {

@@ -1,6 +1,5 @@
 import React from "react";
 import RandomRecipes from "../random-recipes";
-import RandomCocktails from "../random-cocktails";
 
 const Home = () => {
     return(

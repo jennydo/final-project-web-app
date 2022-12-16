@@ -16,7 +16,6 @@ const NavbarComponent = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link onClick={() => navigate('/search')}>Recipes</Nav.Link>
-                        <Nav.Link onClick={() => navigate('/search')}>Cocktails</Nav.Link>
                         <Nav.Link onClick={() => navigate('/blog')}>Blog</Nav.Link>
                     </Nav>
                     <Nav>
