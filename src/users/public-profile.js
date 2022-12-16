@@ -30,6 +30,7 @@ const PublicProfile = () => {
         dispatch(followUserThunk({
                                      followed: uid
                                  }))
+        setFollowedBtn(!followedBtn)
     }
 
 
