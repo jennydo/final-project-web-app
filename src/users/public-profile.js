@@ -63,7 +63,7 @@ const PublicProfile = () => {
                  {
                      followedBtn ?
                      <Button variant={'outline-success'}
-                             className={'float-end'} disabled={true}>Followed</Button>
+                             className={'float-end'}>Followed</Button>
                               :
                      <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
                  }
