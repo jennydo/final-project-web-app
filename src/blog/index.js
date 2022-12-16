@@ -5,6 +5,8 @@ import {useEffect} from "react";
 import {getAllBlogsThunk} from "./blog-thunks";
 import {parseTime} from "./parseTime";
 import {Link} from "react-router-dom";
+import {userLikesFoodThunk} from "../likes/likes-thunks";
+import React from "@types/react";
 
 const blogs = [
     {
@@ -51,6 +53,17 @@ const Blog = () => {
                         blog.map(b => <li className={'list-group-item'}
                                           onClick={() => navigate('details/' + b._id)} key={b._id}>
                             <h5>{b.title}</h5>
+
+
+
+                            <i onClick={() => {
+                                dispatch(userLikesFoodThunk())
+                            }}
+                               className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+
+
+
+
                             <div className={'text-secondary'}>
                                 <span>By: {b.author.authorName}</span>
                             <i className="bi bi-dot"></i>

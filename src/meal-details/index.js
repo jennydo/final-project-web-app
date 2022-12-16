@@ -87,10 +87,7 @@ const MealDetails = () => {
                 !loading && <>
 
                     <h2>{meal.strMeal}</h2>
-                    <i onClick={() => {
-                        dispatch(userLikesFoodThunk(mid))
-                    }}
-                       className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+
                     <h5><span className="badge bg-secondary">{meal.strArea}</span> <span
                         className="badge bg-secondary">{meal.strCategory}</span></h5>
 

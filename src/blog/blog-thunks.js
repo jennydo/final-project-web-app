@@ -1,5 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import * as service from './blog-service'
+import {deleteBlog} from "./blog-service";
 
 export const createBlogThunk = createAsyncThunk(
     'createBlog',
@@ -18,4 +19,11 @@ export const getBlogDetailsThunk = createAsyncThunk(
 
 
 
+export const deleteBlogThunk = createAsyncThunk(
+    'deleteBlog',
+    (mid) => deleteBlog(mid)
+)
+
+
+export const updateMovieThunk = {}
 

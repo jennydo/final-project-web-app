@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import {Badge} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Follows from "../follows/follows";
+import Likes from "../likes/likes";
 
 const PublicProfile = () => {
     const {uid} = useParams()
@@ -108,6 +109,14 @@ const PublicProfile = () => {
                                          </>
                      }
 
+
+                     <Follows uid={uid}/>
+
+                     <hr/>
+
+                     <h4>Favorites</h4>
+                     <Likes/>
+
                      <h4>Comments</h4>
                      <ul className={'list-group'}>
                          {
@@ -128,7 +137,6 @@ const PublicProfile = () => {
                      </ul>
 
 
-                     <Follows uid={uid}/>
                  </Container>
              </>
             }

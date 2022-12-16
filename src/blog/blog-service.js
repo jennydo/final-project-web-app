@@ -21,3 +21,12 @@ export const getBlogDetails = async (bid) => {
     return response.data
 }
 
+
+
+export const deleteBlog = async (bid) => {
+    const response = await axios.delete(`${BLOG_API}/${bid}`)
+    const status = response.data
+    return bid;
+}
+
+export const updateMovie = async () => {}

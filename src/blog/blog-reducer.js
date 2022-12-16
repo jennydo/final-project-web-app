@@ -1,5 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {createBlogThunk, getAllBlogsThunk, getBlogDetailsThunk} from "./blog-thunks";
+import {
+    createBlogThunk,
+    deleteBlogThunk,
+    getAllBlogsThunk,
+    getBlogDetailsThunk
+} from "./blog-thunks";
 
 const initialState = {
     blog: [],
@@ -63,6 +68,13 @@ const BlogReducer = createSlice({
                 state.blogCreateError = false;
                 state.blogNotFoundError = true;
             },
+
+
+        [deleteBlogThunk.fulfilled]: (state, action) => {
+            state.blogs = state.blogs.filter(blog => {
+                return blog.id !== action.payload
+            })
+        }
     }
 })
 
