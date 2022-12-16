@@ -3,7 +3,6 @@ import {useEffect} from "react";
 import {findFoodLikedByUserThunk} from "./likes-thunks";
 
 const Likes = ({uid, p1, p2}) => {
-    // const {likes} = useSelector((state) => state.likes)
     const likes = [uid]
     const dispatch = useDispatch()
     useEffect(() => {
