@@ -6,6 +6,8 @@ import {getAllBlogsThunk} from "./blog-thunks";
 import {parseTime} from "./parseTime";
 import {Link} from "react-router-dom";
 import {userLikesFoodThunk} from "../likes/likes-thunks";
+import {useState} from "@types/react";
+import {followUserThunk} from "../follows/follows-thunks";
 
 const blogs = [
     {
@@ -29,6 +31,12 @@ const Blog = () => {
     const dispatch = useDispatch();
     const {currentUser} = useSelector((state) => state.users)
     const {blog, loading} = useSelector((state) => state.blog);
+
+    const [liked, setLiked] = useState(false);
+    const handleLikeBtn = () => {
+        dispatch(userLikesFoodThunk())
+    }
+
     useEffect(() => {
         dispatch(getAllBlogsThunk());
     }, [])
@@ -58,7 +66,14 @@ const Blog = () => {
                             <i onClick={() => {
                                 dispatch(userLikesFoodThunk())
                             }}
-                               className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+                               className="red"></i>
+
+                            {
+                                liked ?
+                                <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} text-danger float-end bi bi-heart-fill me-2`}></i>
+                                         :
+                                <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+                            }
 
 
 
