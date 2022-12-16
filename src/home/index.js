@@ -40,7 +40,7 @@ const Home = () => {
                                     <p>This user haven't written any blog.</p>
                                     :
 
-                                    blog.map((b) =>
+                                blog.filter(bg => bg.author.authorName === currentUser.username).map((b) =>
 
                                         <li className={'list-group-item'}
                                             onClick={() => navigate('/blog/details/' + b._id)} key={b._id}>
@@ -66,20 +66,28 @@ const Home = () => {
                     </>
                 }
 
-                <h4>Recent Comments</h4>
-                <ul className={'list-group mb-3'}>
-                    { currentUser &&
-                    reviews &&
-                    reviews.length === 0 ?
-                        <p>This user haven't posted any comments yet.</p> :
-                        reviews.map((u) =>
-                            <li className={'list-group-item'} onClick={() => navigate(`/meal/details/${u.idMeal}`)}>
+                {currentUser &&
+                 <>
+                     <h4>Recent Comments</h4>
+                     <ul className={'list-group mb-3'}>
+                         {currentUser &&
+                          reviews &&
+                          reviews.length === 0 ?
+                          <p>This user haven't posted any comments yet.</p> :
+                          reviews.map((u) =>
+                                          <li className={'list-group-item'}
+                                              onClick={() => navigate(`/meal/details/${u.idMeal}`)}>
 
-                                <span className={'fw-bold'}><Link className={'text-black'} to={`/profile/${u.author._id}`}>{u.author.username}</Link></span>
-                                <span><i className="bi bi-dot"></i>{parseTime(u.time)}</span><p>{u.review}</p>
-                            </li>)
-                    }
-                </ul>
+                                              <span className={'fw-bold'}><Link
+                                                  className={'text-black'}
+                                                  to={`/profile/${u.author._id}`}>{u.author.username}</Link></span>
+                                              <span><i className="bi bi-dot"></i>{parseTime(u.time)}</span>
+                                              <p>{u.review}</p>
+                                          </li>)
+                         }
+                     </ul>
+                 </>
+                }
 
                 <h3>Recommended Recipes</h3>
                 <RandomRecipes/>
