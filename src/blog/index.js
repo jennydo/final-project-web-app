@@ -1,12 +1,11 @@
 import {useNavigate} from "react-router";
 import {Button} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getAllBlogsThunk} from "./blog-thunks";
 import {parseTime} from "./parseTime";
 import {Link} from "react-router-dom";
 import {userLikesFoodThunk} from "../likes/likes-thunks";
-import {useState} from "@types/react";
 import {followUserThunk} from "../follows/follows-thunks";
 
 const blogs = [

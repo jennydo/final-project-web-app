@@ -3,7 +3,7 @@ import {
     createBlogThunk,
     deleteBlogThunk,
     getAllBlogsThunk,
-    getBlogDetailsThunk
+    getBlogDetailsThunk, getBlogsByUserIdThunk
 } from "./blog-thunks";
 
 const initialState = {
@@ -68,13 +68,19 @@ const BlogReducer = createSlice({
                 state.blogCreateError = false;
                 state.blogNotFoundError = true;
             },
-
-
         [deleteBlogThunk.fulfilled]: (state, action) => {
             state.blogs = state.blogs.filter(blog => {
                 return blog.id !== action.payload
             })
-        }
+        },
+        [getBlogsByUserIdThunk.pending]: (state, action) => {
+            state.blog = []
+            state.loading = true;
+        },
+        [getBlogsByUserIdThunk.fulfilled]: (state, action) => {
+            state.blog = action.payload
+            state.loading = false;
+        },
     }
 })
 

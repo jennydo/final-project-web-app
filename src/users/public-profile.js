@@ -1,4 +1,4 @@
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {findUserByIdThunk} from "./users-thunk";
@@ -13,16 +13,19 @@ import {Badge} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Follows from "../follows/follows";
 import Likes from "../likes/likes";
+import {getBlogsByUserIdThunk} from "../blog/blog-thunks";
+import {userLikesFoodThunk} from "../likes/likes-thunks";
+import {parseTime} from "../blog/parseTime";
 
 const PublicProfile = () => {
     const {uid} = useParams()
-    const {currentUser} = useSelector((state) => state.users)
     const {publicProfile} = useSelector((state) => state.users)
-    const {blogs} = useSelector((state) => state.blog)
+    const {blog} = useSelector((state) => state.blog)
     const {reviews} = useSelector((state) => state.reviews)
     const {followers, following} = useSelector((state) => state.follows)
     const [followed, setFollowed] = useState(false);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleFollowBtn = () => {
         dispatch(followUserThunk({
                                      followed: uid
@@ -30,13 +33,14 @@ const PublicProfile = () => {
         setFollowed(!followed)
     }
 
-
+    console.log(reviews)
 
     useEffect(() => {
-       dispatch(findUserByIdThunk(uid))
-        dispatch(findReviewsByAuthorThunk(uid))
-       // dispatch(findFollowersThunk(uid))
-        //dispatch(findFollowingThunk(uid))
+        dispatch(findUserByIdThunk(uid))
+        dispatch(getBlogsByUserIdThunk(uid))
+        // dispatch(findReviewsByAuthorThunk(uid))
+        // dispatch(findFollowersThunk(uid))
+        // dispatch(findFollowingThunk(uid))
     }, [])
 
     return (
@@ -85,23 +89,37 @@ const PublicProfile = () => {
 
                      </Form>
 
-                     {currentUser.role = 'BLOGGER' &&
+                     <hr/>
+
+                     { publicProfile &&  publicProfile.role === 'BLOGGER' &&
                                          <>
                                              <h4>Blogs</h4>
-                                             <ul className={'list-group'}>
+                                             <ul className={'list-group mb-3'}>
                                                  {
-                                                     blogs &&
-                                                     blogs.length === 0 ?
+                                                     blog &&
+                                                     blog.length === 0 ?
                                                      <p>This user haven't written any blog.</p>
                                                                         :
 
-                                                     blogs.map((blog) =>
-                                                                   <li>
-                                                                       <Link
-                                                                           to={`/blog/details/${blog.id}`}>
-                                                                           {blog.title}
-                                                                       </Link>
-                                                                   </li>
+                                                         blog.map((b) =>
+
+                                                                       <li className={'list-group-item'}
+                                                                           onClick={() => navigate('/blog/details/' + b._id)} key={b._id}>
+                                                                           <h5>{b.title}</h5>
+
+
+
+                                                                           <i onClick={() => {
+                                                                               dispatch(userLikesFoodThunk())
+                                                                           }}
+                                                                              className="red"></i>
+                                                                           <div className={'text-secondary'}>
+                                                                               <span>By: {b.author.authorName}</span>
+                                                                               <i className="bi bi-dot"></i>
+                                                                               <span>{parseTime(b.time)}</span>
+                                                                           </div>
+
+                                                                       </li>
                                                      )
 
                                                  }
@@ -112,27 +130,21 @@ const PublicProfile = () => {
 
                      <Follows uid={uid}/>
 
-                     <hr/>
-
                      <h4>Favorites</h4>
                      <Likes/>
 
                      <h4>Comments</h4>
                      <ul className={'list-group'}>
-                         {
+                         { publicProfile &&
                              reviews &&
                              reviews.length === 0 ?
-                             <p>This user haven't posted any comments yet.</p>
-                                                  :
+                             <p>This user haven't posted any comments yet.</p> :
+                             reviews.map((u) =>
+                                 <li className={'list-group-item'} onClick={() => navigate(`/meal/details/${u.idMeal}`)}>
 
-                             reviews.map((review) =>
-                                             <li>
-                                                 <Link to={`/meal/details/${review.idMeal}`}>
-                                                     {review.review} {review.idMeal}
-                                                 </Link>
-                                             </li>
-                             )
-
+                                     <span className={'fw-bold'}><Link className={'text-black'} to={`/profile/${u.author._id}`}>{u.author.username}</Link></span>
+                                     <span><i className="bi bi-dot"></i>{parseTime(u.time)}</span><p>{u.review}</p>
+                                 </li>)
                          }
                      </ul>
 

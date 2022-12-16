@@ -21,6 +21,11 @@ export const getBlogDetails = async (bid) => {
     return response.data
 }
 
+export const getBlogsByUserIdService = async (uid) => {
+    const response = await api.get(`${BLOG_API}/user/${uid}`)
+    return response.data
+}
+
 
 
 export const deleteBlog = async (bid) => {

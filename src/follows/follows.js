@@ -22,26 +22,35 @@ const Follows = ({uid}) => {
 
     return(
         <>
-            <h2>Following</h2>
-            <div className="list-group">
+            <h4>Following</h4>
+            <ul className="list-group mb-3">
                 {
-                    following && following.map((follow) =>
+                    following &&
+                        following.length === 0 ?
+
+                        <p>This user is not following anyone yet.</p> :
+
+                    following.map((follow) =>
+                        <li className={'list-group-item'}>
                                                    <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
                                                        {follow.followed.username}
                                                    </Link>
+                        </li>
                               )
                 }
-            </div>
-            <h2>Followers</h2>
-            <div className="list-group">
+            </ul>
+            <h4>Followers</h4>
+            <ul className="list-group mb-3">
                 {
-                    followers && followers.map((follow) =>
+                    followers && followers.length === 0 ?
+                        <p>This user is not following anyone yet.</p> :
+                        followers.map((follow) =>
                                                    <Link to={`/profile/${follow.follower._id}`} className="list-group-item">
                                                        {follow.follower.username}
                                                    </Link>
                               )
                 }
-            </div>
+            </ul>
         </>
     )
 }

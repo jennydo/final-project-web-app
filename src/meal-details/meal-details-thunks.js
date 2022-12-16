@@ -17,3 +17,5 @@ export const postMealCommentThunk = createAsyncThunk(
     'meal/postComment',
     async (comment) => await postMealCommentService(comment))
 
+
+
