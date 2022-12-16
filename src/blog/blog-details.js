@@ -45,15 +45,19 @@ const BlogDetails = () => {
 {/*                <span>By: <Link to={'/profile/' + blogById.author.authorId} className={' text-secondary'}>*/}
 {/*                    {blogById.author.authorName}*/}
 {/*                </Link></span> }*/}
-                    <span>
+                    {
+                        blogById.author &&
+
+                        <span>
                 <span>By: <Link to={'/profile/' + blogById.author.authorId} className={' text-secondary'}>
             {blogById.author.authorName}
                 </Link>
                 </span>
                         <i onClick={() => {
                             dispatch(userLikesFoodThunk(bid))
-                        }} className={`${currentUser? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+                        }} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
                     </span>
+                    }
                 <i className="bi bi-dot"></i>
                 <span>{parseTime(blogById.time)}</span>
                 </div>
