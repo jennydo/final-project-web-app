@@ -24,7 +24,6 @@ export const deleteReviewService = async (commentID) => {
 
 
 export const findReviewsByFood = async (idMeal) => {
-    console.log(idMeal)
     const response = await api.get(`${FOOD_REVIEWS_API}/${idMeal}`)
     return response.data
 }

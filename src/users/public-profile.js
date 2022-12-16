@@ -20,6 +20,7 @@ import {parseTime} from "../blog/parseTime";
 const PublicProfile = () => {
     const {uid} = useParams()
     const {publicProfile} = useSelector((state) => state.users)
+    const {currentUser} = useSelector((state) => state.users)
     const {blog} = useSelector((state) => state.blog)
     const {reviews} = useSelector((state) => state.reviews)
     const {followers, following} = useSelector((state) => state.follows)
@@ -32,8 +33,6 @@ const PublicProfile = () => {
                                  }))
         setFollowedBtn(!followedBtn)
     }
-
-
 
 
     useEffect(() => {
@@ -56,12 +55,19 @@ const PublicProfile = () => {
 
             {publicProfile &&
              <>
-                 {
-                     followedBtn ?
-                     <Button variant={'outline-success'}
-                             className={'float-end'}>Followed</Button>
-                              :
-                     <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
+                 { currentUser ?
+
+                     <>
+                         {
+                             followedBtn ?
+                                 <Button variant={'outline-success'}
+                                         className={'float-end'}>Followed</Button>
+                                 :
+                                 <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
+                         }
+                     </>
+                     :
+                     <></>
                  }
 
 
