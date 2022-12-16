@@ -33,15 +33,17 @@ const PublicProfile = () => {
         setFollowed(!followed)
     }
 
+
     console.log(reviews)
+    console.log(followers)
 
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
         dispatch(getBlogsByUserIdThunk(uid))
         // dispatch(findReviewsByAuthorThunk(uid))
-        // dispatch(findFollowersThunk(uid))
-        // dispatch(findFollowingThunk(uid))
-    }, [])
+        dispatch(findFollowersThunk(uid))
+        dispatch(findFollowingThunk(uid))
+    }, [uid])
 
     return (
         <div className={'mb-3 mt-2'}>
@@ -59,7 +61,7 @@ const PublicProfile = () => {
                      <Button onClick={handleFollowBtn} variant={'outline-success'}
                              className={'float-end'}>Followed</Button>
                               :
-                     <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
+                     <Button onClick={ handleFollowBtn} className={'float-end'}>Follow</Button>
                  }
 
                  <h2>@{publicProfile.username}</h2>

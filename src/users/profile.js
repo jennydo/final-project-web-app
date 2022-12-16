@@ -189,8 +189,6 @@ const Profile = () => {
             </ul>
             <h4>Following</h4>
             <ul className={'list-group'}>
-
-
                 {
                     following &&
                     reviews.length === 0 ?
