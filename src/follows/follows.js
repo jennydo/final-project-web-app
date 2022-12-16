@@ -27,6 +27,7 @@ console.log(followers, following);
                         )
                         :
                         <p>This user haven't followed anyone .</p>
+
                 }
             </div>
             <h2>Followers</h2>
@@ -40,6 +41,7 @@ console.log(followers, following);
                         )
                         :
                         <p>This user don't have followers yet.</p>
+
                 }
             </div>
         </>
