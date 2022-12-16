@@ -12,7 +12,6 @@ const Follows = ({uid}) => {
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
     }, [])
-console.log(followers, following);
     return(
         <>
             <h2>Following</h2>

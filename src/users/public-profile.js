@@ -35,15 +35,12 @@ const PublicProfile = () => {
 
 
 
-    console.log(followers, following);
-
-
 
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
         dispatch(getBlogsByUserIdThunk(uid))
 
-        // dispatch(findReviewsByAuthorThunk(uid))
+         dispatch(findReviewsByAuthorThunk(uid))
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
     }, [uid])
@@ -177,7 +174,9 @@ const PublicProfile = () => {
                              reviews &&
                              reviews.length === 0 ?
                              <p>This user haven't posted any comments yet.</p> :
-                             reviews.map((u) =>
+                             reviews
+                                 .filter(u => u.author._id === uid)
+                                 .map((u) =>
                                  <li className={'list-group-item'} onClick={() => navigate(`/meal/details/${u.idMeal}`)}>
 
                                      <span className={'fw-bold'}><Link className={'text-black'} to={`/profile/${u.author._id}`}>{u.author.username}</Link></span>
