@@ -5,11 +5,15 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Alert, Badge} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {findReviewsByAuthorThunk} from "../reviews/reviews-thunks";
 import {findFollowersThunk, findFollowingThunk} from "../follows/follows-thunks";
+import {userLikesFoodThunk} from "../likes/likes-thunks";
+import {parseTime} from "../blog/parseTime";
+import Follows from "../follows/follows";
+import {getBlogsByUserIdThunk} from "../blog/blog-thunks";
 const Profile = () => {
     const navigate = useNavigate()
     const {currentUser} = useSelector((state) => state.users)
@@ -26,7 +30,12 @@ const Profile = () => {
     const {reviews} = useSelector((state) => state.reviews)
     const {followers, following} = useSelector((state) => state.follows)
     const [followed, setFollowed] = useState(false);
-
+    const {blog} = useSelector((state) => state.blog)
+    useEffect(() => {
+        dispatch(findUserByIdThunk(currentUser._id))
+        dispatch(getBlogsByUserIdThunk(currentUser._id))
+        dispatch(findReviewsByAuthorThunk(currentUser._id))
+    }, [])
     const dispatch = useDispatch()
     const handleLogoutBtn = () => {
         dispatch(logoutThunk())
@@ -167,44 +176,65 @@ const Profile = () => {
             <br/>
             <div className={' mt-3 mb-3'}>
 
+            <hr/>
+
+                { currentUser &&  currentUser.role === 'BLOGGER' &&
+                    <>
+                        <h4>Blogs</h4>
+                        <ul className={'list-group mb-3'}>
+                            {
+                                blog &&
+                                blog.length === 0 ?
+                                    <p>This user haven't written any blog.</p>
+                                    :
+
+                                    blog.map((b) =>
+
+                                        <li className={'list-group-item'}
+                                            onClick={() => navigate('/blog/details/' + b._id)} key={b._id}>
+                                            <h5>{b.title}</h5>
 
 
-            <h4>Comments</h4>
-            <ul className={'list-group'}>
-                {
+
+                                            <i onClick={() => {
+                                                dispatch(userLikesFoodThunk())
+                                            }}
+                                               className="red"></i>
+                                            <div className={'text-secondary'}>
+                                                <span>By: {b.author.authorName}</span>
+                                                <i className="bi bi-dot"></i>
+                                                <span>{parseTime(b.time)}</span>
+                                            </div>
+
+                                        </li>
+                                    )
+
+                            }
+                        </ul>
+                    </>
+                }
+
+
+                <Follows uid={currentUser._id}/>
+
+
+                <h4>Comments</h4>
+                <ul className={'list-group mb-3'}>
+                    { currentUser &&
                     reviews &&
                     reviews.length === 0 ?
-                        <p>This user haven't posted any comments yet.</p>
-                        :
+                        <p>This user haven't posted any comments yet.</p> :
+                        reviews.map((u) =>
+                            <li className={'list-group-item'} onClick={() => navigate(`/meal/details/${u.idMeal}`)}>
 
-                        reviews.map((review) =>
-                            <li>
-                                <Link to={`/meal/details/${review.idMeal}`}>
-                                    {review.review} {review.idMeal}
-                                </Link>
-                            </li>
-                        )
-
-                }
-            </ul>
-            <h4>Following</h4>
-            <ul className={'list-group'}>
-
-
-                {
-                    following &&
-                    reviews.length === 0 ?
-                        <p>This user haven't followed anyone yet.</p>
-                        :
-                        following.map((follow) =>
-                            <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
-                                {follow.followed.username}
-                            </Link>
-                        )
-                }
-            </ul>
+                                <span className={'fw-bold'}><Link className={'text-black'} to={`/profile/${u.author._id}`}>{u.author.username}</Link></span>
+                                <span><i className="bi bi-dot"></i>{parseTime(u.time)}</span><p>{u.review}</p>
+                            </li>)
+                    }
+                </ul>
 
             </div>
+            <hr/>
 
             <Button className={'btn-danger mt-3'}
                     onClick={handleLogoutBtn}>

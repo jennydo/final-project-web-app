@@ -38,7 +38,7 @@ const PublicProfile = () => {
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
         dispatch(getBlogsByUserIdThunk(uid))
-        // dispatch(findReviewsByAuthorThunk(uid))
+        dispatch(findReviewsByAuthorThunk(uid))
         // dispatch(findFollowersThunk(uid))
         // dispatch(findFollowingThunk(uid))
     }, [])
