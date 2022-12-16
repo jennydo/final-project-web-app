@@ -130,8 +130,6 @@ const PublicProfile = () => {
 
                      <Follows uid={uid}/>
 
-                     <h4>Favorites</h4>
-                     <Likes/>
 
                      <h4>Comments</h4>
                      <ul className={'list-group'}>
