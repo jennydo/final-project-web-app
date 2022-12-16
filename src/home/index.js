@@ -13,7 +13,7 @@ const Home = () => {
 
                 {
                     currentUser &&
-                    <h1>Welcome new user: {currentUser.username}</h1>
+                    <h1>Welcome User {currentUser.username}</h1>
                 }
 
                 <h3>Recommended Recipes</h3>
