@@ -62,17 +62,13 @@ const Blog = () => {
 
 
 
-                            <i onClick={() => {
-                                dispatch(userLikesFoodThunk())
-                            }}
-                               className="red"></i>
 
-                            {
-                                liked ?
-                                <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} text-danger float-end bi bi-heart-fill me-2`}></i>
-                                         :
-                                <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
-                            }
+                            {/*{*/}
+                            {/*    liked ?*/}
+                            {/*    <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} text-danger float-end bi bi-heart-fill me-2`}></i>*/}
+                            {/*             :*/}
+                            {/*    <i onClick={handleLikeBtn} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>*/}
+                            {/*}*/}
 
 
 

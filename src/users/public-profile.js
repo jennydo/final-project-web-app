@@ -23,23 +23,24 @@ const PublicProfile = () => {
     const {blog} = useSelector((state) => state.blog)
     const {reviews} = useSelector((state) => state.reviews)
     const {followers, following} = useSelector((state) => state.follows)
-    const [followed, setFollowed] = useState(false);
+    const [followedBtn, setFollowedBtn] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleFollowBtn = () => {
         dispatch(followUserThunk({
                                      followed: uid
                                  }))
-        setFollowed(!followed)
     }
 
 
     console.log(reviews)
     console.log(followers)
+    console.log(following)
 
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
         dispatch(getBlogsByUserIdThunk(uid))
+
         // dispatch(findReviewsByAuthorThunk(uid))
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
@@ -57,12 +58,14 @@ const PublicProfile = () => {
             {publicProfile &&
              <>
                  {
-                     followed ?
-                     <Button onClick={handleFollowBtn} variant={'outline-success'}
-                             className={'float-end'}>Followed</Button>
+                     followedBtn ?
+                     <Button variant={'outline-success'}
+                             className={'float-end'} disabled={true}>Followed</Button>
                               :
-                     <Button onClick={ handleFollowBtn} className={'float-end'}>Follow</Button>
+                     <Button onClick={handleFollowBtn} className={'float-end'}>Follow</Button>
                  }
+
+
 
                  <h2>@{publicProfile.username}</h2>
 
@@ -95,7 +98,7 @@ const PublicProfile = () => {
 
                      { publicProfile &&  publicProfile.role === 'BLOGGER' &&
                                          <>
-                                             <h4>Blogs</h4>
+                                             <h2>Blogs</h2>
                                              <ul className={'list-group mb-3'}>
                                                  {
                                                      blog &&
@@ -103,7 +106,8 @@ const PublicProfile = () => {
                                                      <p>This user haven't written any blog.</p>
                                                                         :
 
-                                                         blog.map((b) =>
+
+                                                         blog.filter(bg => bg.author.authorName === publicProfile.username).map((b) =>
 
                                                                        <li className={'list-group-item'}
                                                                            onClick={() => navigate('/blog/details/' + b._id)} key={b._id}>
@@ -130,10 +134,34 @@ const PublicProfile = () => {
                      }
 
 
-                     <Follows uid={uid}/>
+                     {/*<Follows uid={uid}/>*/}
+
+                     <h2>Following</h2>
+                     <div className="list-group">
+                         {
+                             following && following.map((follow) =>
+                                                            <Link to={`/profile/${follow.following._id}`} className="list-group-item">
+                                                                {follow.following.username}
+                                                            </Link>
+                                       )
+                         }
+                     </div>
+                     <h2>Followers</h2>
+                     <div className="list-group">
+                         {
+                             followers && followers.map((follow) =>
+                                                            <Link to={`/profile/${follow.followers._id}`} className="list-group-item">
+                                                                {follow.followers.username}
+                                                            </Link>
+                                       )
+                         }
+                     </div>
 
 
-                     <h4>Comments</h4>
+
+
+
+                     <h2>Comments</h2>
                      <ul className={'list-group'}>
                          { publicProfile &&
                              reviews &&
