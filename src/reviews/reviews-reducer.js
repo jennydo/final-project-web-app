@@ -15,6 +15,7 @@ const reviewsReducer = createSlice({
                                        },
                                        extraReducers: {
                                            [createReviewThunk.fulfilled]: (state, action) => {
+                                               console.log(action.payload)
                                                state.reviews.unshift(action.payload)
                                            },
                                            [updateReviewThunk.fulfilled]: (state, action) => {

@@ -12,27 +12,34 @@ const Follows = ({uid}) => {
         dispatch(findFollowersThunk(uid))
         dispatch(findFollowingThunk(uid))
     }, [])
-
+console.log(followers, following);
     return(
         <>
             <h2>Following</h2>
             <div className="list-group">
                 {
-                    following && following.map((follow) =>
-                                                   <Link to={`/profile/${follow.following._id}`} className="list-group-item">
-                                                       {follow.following.username}
-                                                   </Link>
-                              )
+                    following &&
+                    following.length > 0 ?
+                        following.map((follow) =>
+                            <Link to={`/profile/${follow.followed._id}`} className="list-group-item">
+                                {follow.followed.username}
+                            </Link>
+                        )
+                        :
+                        <p>This user haven't followed anyone .</p>
                 }
             </div>
             <h2>Followers</h2>
             <div className="list-group">
                 {
-                    followers && followers.map((follow) =>
-                                                   <Link to={`/profile/${follow.followers._id}`} className="list-group-item">
-                                                       {follow.followers.username}
-                                                   </Link>
-                              )
+                    followers &&
+                    followers.length > 0 ? followers.map((follow) =>
+                            <Link to={`/profile/${follow.follower._id}`} className="list-group-item">
+                                {follow.follower.username}
+                            </Link>
+                        )
+                        :
+                        <p>This user don't have followers yet.</p>
                 }
             </div>
         </>

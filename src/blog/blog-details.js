@@ -53,9 +53,9 @@ const BlogDetails = () => {
             {blogById.author.authorName}
                 </Link>
                 </span>
-                        <i onClick={() => {
-                            dispatch(userLikesFoodThunk(bid))
-                        }} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>
+                        {/*<i onClick={() => {*/}
+                        {/*    dispatch(userLikesFoodThunk(bid))*/}
+                        {/*}} className={`${currentUser ? '' : 'd-none'} float-end bi bi-heart me-2`}></i>*/}
                     </span>
                     }
                 <i className="bi bi-dot"></i>
