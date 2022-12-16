@@ -69,7 +69,6 @@ const Profile = () => {
         }
 
     }
-    console.log(currentUser);
 
     return (
         <>
