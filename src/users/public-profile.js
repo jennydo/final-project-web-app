@@ -33,7 +33,7 @@ const PublicProfile = () => {
         setFollowed(!followed)
     }
 
-    console.log(reviews)
+    console.log(blog)
 
     useEffect(() => {
         dispatch(findUserByIdThunk(uid))
@@ -97,10 +97,7 @@ const PublicProfile = () => {
                                              <ul className={'list-group mb-3'}>
                                                  {
                                                      blog &&
-                                                     blog.length === 0 ?
-                                                     <p>This user haven't written any blog.</p>
-                                                                        :
-
+                                                     blog.length !== 0 ?
                                                          blog.map((b) =>
 
                                                                        <li className={'list-group-item'}
@@ -121,6 +118,9 @@ const PublicProfile = () => {
 
                                                                        </li>
                                                      )
+                                                         :
+                                                         <p>This user haven't written any blog.</p>
+
 
                                                  }
                                              </ul>
